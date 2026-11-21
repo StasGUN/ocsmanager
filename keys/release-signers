@@ -1,0 +1,3 @@
+# Keys that may sign OCS Manager releases (ssh-keygen allowed_signers format).
+# Servers install only archives signed by one of these keys.
+ocsmanager namespaces="ocsmanager-release" ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGzAg5BMRx+a4vX1WcMGs9zwd3SkRLbtVRMcCiTnvGeQ
