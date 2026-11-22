@@ -12,9 +12,13 @@
 
 **English** · [Русский](README.ru.md)
 
-[Quick start](#quick-start) · [Beginner's guide](docs/QUICKSTART.md) · [Features](#features) · [Options](#options) · [Changelog](CHANGELOG.md)
+[Quick start](#quick-start) · [Screenshots](#screenshots) · [Beginner's guide](docs/QUICKSTART.md) · [Features](#features) · [Options](#options) · [Changelog](CHANGELOG.md)
 
 </div>
+
+<p align="center">
+  <img src="docs/images/dashboard.png" alt="OCS Manager admin panel: overview" width="900">
+</p>
 
 ---
 
@@ -43,6 +47,44 @@ Windows, macOS, Linux, iOS and Android.
 | ↩️ **Safe updates** | Signature check, settings backup, automatic rollback on failure, manual rollback to the previous version |
 | 🌍 **Two languages** | Panel interface in English and Russian |
 | ♻️ **Safe to re-run** | Configs are backed up, NAT rules are replaced (not duplicated), panel settings survive re-runs |
+
+<a id="screenshots"></a>
+
+## 📸 Screenshots
+
+The panel works on a phone just as well as on a desktop:
+
+<p align="center">
+  <img src="docs/images/mobile.png" alt="Menu, user list and user details on a phone" width="820">
+</p>
+
+<details>
+<summary><b>More screenshots</b></summary>
+<br>
+
+| Sign-in | Dangerous actions need your password |
+|:---:|:---:|
+| <img src="docs/images/login.png" alt="Sign-in page" width="480"> | <img src="docs/images/reboot.png" alt="Server reboot confirmation" width="260"> |
+
+</details>
+
+> The interface is available in English and Russian; the screenshots show the Russian version.
+
+<a id="how-it-works"></a>
+
+## 🧭 How it works
+
+```mermaid
+flowchart LR
+    U["📱💻 Clients<br/>Cisco Secure Client / OpenConnect"] -- "TCP/UDP 443<br/>https://domain/?secret" --> O
+    B["🌐 Browser"] -- "TCP 8443" --> P
+    subgraph VPS["VPS · Ubuntu / Debian"]
+        O["ocserv<br/>camouflage"] --> N["NAT → Internet"]
+        P["OCS Manager<br/>portal + admin panel"] -- "users, sessions,<br/>settings" --> O
+        F["fail2ban + UFW"] -. protects .-> O & P
+    end
+    G["GitHub Releases<br/>signed"] -- "updates" --> P
+```
 
 <a id="requirements"></a>
 
