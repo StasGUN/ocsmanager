@@ -12,9 +12,13 @@
 
 [English](README.md) · **Русский**
 
-[Быстрый старт](#quick-start) · [Инструкция для новичков](docs/QUICKSTART.ru.md) · [Возможности](#features) · [Параметры](#options) · [Изменения](CHANGELOG.md)
+[Быстрый старт](#quick-start) · [Скриншоты](#screenshots) · [Инструкция для новичков](docs/QUICKSTART.ru.md) · [Возможности](#features) · [Параметры](#options) · [Изменения](CHANGELOG.md)
 
 </div>
+
+<p align="center">
+  <img src="docs/images/dashboard.png" alt="Панель OCS Manager: обзор" width="900">
+</p>
 
 ---
 
@@ -43,6 +47,42 @@ OCS Manager превращает чистый VPS в готовый VPN-серв
 | ↩️ **Безопасные обновления** | Проверка подписи, резервная копия настроек, автоматический откат при сбое, ручной откат на прошлую версию |
 | 🌍 **Два языка** | Интерфейс панели на русском и английском |
 | ♻️ **Можно запускать повторно** | Конфиги сохраняются в резервные копии, правила NAT заменяются (не дублируются), настройки из панели сохраняются |
+
+<a id="screenshots"></a>
+
+## 📸 Скриншоты
+
+Панель одинаково удобна и на компьютере, и на телефоне:
+
+<p align="center">
+  <img src="docs/images/mobile.png" alt="Меню, список пользователей и карточка пользователя на телефоне" width="820">
+</p>
+
+<details>
+<summary><b>Ещё скриншоты</b></summary>
+<br>
+
+| Вход | Опасные действия подтверждаются паролем |
+|:---:|:---:|
+| <img src="docs/images/login.png" alt="Страница входа" width="480"> | <img src="docs/images/reboot.png" alt="Подтверждение перезагрузки сервера" width="260"> |
+
+</details>
+
+<a id="how-it-works"></a>
+
+## 🧭 Как это устроено
+
+```mermaid
+flowchart LR
+    U["📱💻 Клиенты<br/>Cisco Secure Client / OpenConnect"] -- "TCP/UDP 443<br/>https://домен/?секрет" --> O
+    B["🌐 Браузер"] -- "TCP 8443" --> P
+    subgraph VPS["VPS · Ubuntu / Debian"]
+        O["ocserv<br/>camouflage"] --> N["NAT → Интернет"]
+        P["OCS Manager<br/>портал + панель"] -- "пользователи, сессии,<br/>настройки" --> O
+        F["fail2ban + UFW"] -. защищает .-> O & P
+    end
+    G["GitHub Releases<br/>с подписью"] -- "обновления" --> P
+```
 
 <a id="requirements"></a>
 
